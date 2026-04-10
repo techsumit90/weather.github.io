@@ -1,0 +1,13 @@
+# OS / Editor artifacts
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# Local dev server logs
+*.log
+
+# Dependency directories (if tooling is added later)
+node_modules/

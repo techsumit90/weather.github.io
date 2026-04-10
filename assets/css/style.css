@@ -1,5 +1,26 @@
 /* ============================================================
-   Atmos Weather App — style.css
+   Atmos Weather App — assets/css/style.css
+   ============================================================
+
+   Table of contents
+   ─────────────────
+   1.  Reset & Box-sizing
+   2.  CSS Custom Properties (design tokens)
+   3.  Base Body + animated background
+   4.  Weather Theme Classes (sunny, cloudy, rainy, stormy, night, snowy, foggy)
+   5.  Star Overlay (night theme)
+   6.  App Container
+   7.  Keyframe Animations
+   8.  Branding
+   9.  Search Bar
+  10.  Autocomplete Dropdown
+  11.  Main Weather Card
+  12.  Stats Grid
+  13.  Section Title
+  14.  Hourly Forecast Strip
+  15.  7-Day Daily Forecast
+  16.  State Boxes (loading / error / empty)
+  17.  Accessibility Utilities
    ============================================================ */
 
 *, *::before, *::after {
@@ -441,3 +462,28 @@ body.foggy .ac-item {
   margin: 0 auto 14px;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── 17. Accessibility Utilities ── */
+
+/**
+ * Visually hides an element while keeping it accessible to screen readers.
+ * Use on <label> elements paired with icon-only inputs.
+ */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus-visible outline — improves keyboard navigation visibility */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
