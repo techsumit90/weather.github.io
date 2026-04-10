@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather — County &amp; Region Forecast</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="theme-default" id="app-body">
+
+  <!-- ===== Header / Search ===== -->
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand-icon">🌤</span>
+      <span class="brand-name">WeatherNow</span>
+    </div>
+
+    <div class="search-wrapper" id="search-wrapper">
+      <input
+        type="text"
+        id="search-input"
+        class="search-input"
+        placeholder="Search city, county or region…"
+        autocomplete="off"
+        aria-label="Search location"
+        aria-autocomplete="list"
+        aria-controls="autocomplete-list"
+      />
+      <button class="search-btn" id="search-btn" aria-label="Search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </button>
+      <button class="locate-btn" id="locate-btn" aria-label="Use my location" title="Auto-detect location">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M12 1v4M12 19v4M1 12h4M19 12h4"/>
+        </svg>
+      </button>
+      <ul class="autocomplete-list hidden" id="autocomplete-list" role="listbox"></ul>
+    </div>
+  </header>
+
+  <!-- ===== Main Content ===== -->
+  <main class="app-main" id="app-main">
+
+    <!-- Loading / Error states -->
+    <div class="state-card" id="loading-state" aria-live="polite">
+      <div class="spinner"></div>
+      <p>Detecting your location…</p>
+    </div>
+
+    <div class="state-card hidden" id="error-state" aria-live="polite">
+      <span class="state-icon">⚠️</span>
+      <p id="error-message">Something went wrong.</p>
+      <button class="retry-btn" id="retry-btn">Try Again</button>
+    </div>
+
+    <!-- ===== Weather Card ===== -->
+    <section class="weather-section hidden" id="weather-section" aria-label="Current weather">
+
+      <!-- Location -->
+      <div class="location-info">
+        <h1 class="location-name" id="location-name">—</h1>
+        <p class="location-sub" id="location-sub">—</p>
+        <p class="location-time" id="location-time">—</p>
+      </div>
+
+      <!-- Main card -->
+      <div class="glass-card main-card">
+        <div class="main-card-left">
+          <span class="weather-icon" id="weather-icon" aria-hidden="true">—</span>
+          <span class="temp-main" id="temp-main">—°</span>
+          <span class="condition-label" id="condition-label">—</span>
+        </div>
+        <div class="main-card-right">
+          <div class="stat-row">
+            <span class="stat-label">Feels like</span>
+            <span class="stat-value" id="feels-like">—</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Humidity</span>
+            <span class="stat-value" id="humidity">—</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Wind</span>
+            <span class="stat-value" id="wind-speed">—</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Visibility</span>
+            <span class="stat-value" id="visibility">—</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Rain chance</span>
+            <span class="stat-value" id="precip-chance">—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 24-Hour Forecast ===== -->
+      <div class="forecast-block">
+        <h2 class="forecast-title">24-Hour Forecast</h2>
+        <div class="hourly-scroll glass-card" id="hourly-scroll" role="list" aria-label="Hourly forecast"></div>
+      </div>
+
+      <!-- ===== 7-Day Forecast ===== -->
+      <div class="forecast-block">
+        <h2 class="forecast-title">7-Day Forecast</h2>
+        <div class="daily-grid glass-card" id="daily-grid" role="list" aria-label="Daily forecast"></div>
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    Data: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> ·
+    Geocoding: <a href="https://www.openstreetmap.org/" target="_blank" rel="noopener">OpenStreetMap</a>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
