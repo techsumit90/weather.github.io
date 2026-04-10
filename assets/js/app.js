@@ -28,13 +28,17 @@ const CONFIG = {
   WEATHER_API:  'https://api.open-meteo.com/v1/forecast',
   GEOCODE_API:  'https://nominatim.openstreetmap.org',
   /** Debounce delay (ms) for autocomplete requests */
-  AC_DEBOUNCE:  320,
+  AC_DEBOUNCE:   320,
   /** Number of autocomplete suggestions to show */
-  AC_LIMIT:     5,
+  AC_LIMIT:      5,
   /** Hours to show in the hourly forecast strip */
-  HOURLY_COUNT: 24,
+  HOURLY_COUNT:  24,
   /** Days to request from the forecast API */
   FORECAST_DAYS: 7,
+  /** Number of stars rendered in the night theme */
+  STAR_COUNT:    120,
+  /** Milliseconds in one hour — used to filter past hourly slots */
+  HOUR_MS:       3_600_000,
 };
 
 /* ── 2. WMO_CODES ───────────────────────────────────────────── */
@@ -109,7 +113,7 @@ function makeStars() {
   container.innerHTML = '';
 
   const fragment = document.createDocumentFragment();
-  for (let i = 0; i < 120; i++) {
+  for (let i = 0; i < CONFIG.STAR_COUNT; i++) {
     const star = document.createElement('div');
     star.className = 'star';
     const size = Math.random() * 2.5 + 0.5;
@@ -144,11 +148,11 @@ function escapeHtml(str) {
 
 /**
  * Formats an ISO datetime string (without trailing Z) to a short label,
- * e.g. "3pm" or "12am", using UTC.
+ * e.g. "3pm" or "12am", interpreting the time as UTC.
  * @param {string} isoStr - e.g. "2024-06-01T15:00"
  * @returns {string}
  */
-function formatHour(isoStr) {
+function formatHourUTC(isoStr) {
   const hour = new Date(isoStr + 'Z').getUTCHours();
   if (hour === 0)  return '12am';
   if (hour < 12)   return hour + 'am';
@@ -362,13 +366,13 @@ function buildHourlyHTML(hourly) {
 
   for (let i = 0; i < hourly.time.length && count < CONFIG.HOURLY_COUNT; i++) {
     const slotTime = new Date(hourly.time[i] + 'Z');
-    if (slotTime < now - 3_600_000) continue; // skip slots already past
+    if (slotTime < now - CONFIG.HOUR_MS) continue; // skip slots already past
 
     const isNowSlot = count === 0;
     const slotIcon  = (WMO_CODES[hourly.weather_code[i]] || ['🌡️'])[0];
     const slotTemp  = Math.round(hourly.temperature_2m[i]);
     const slotPrec  = hourly.precipitation_probability[i] ?? 0;
-    const timeLabel = isNowSlot ? 'Now' : formatHour(hourly.time[i]);
+    const timeLabel = isNowSlot ? 'Now' : formatHourUTC(hourly.time[i]);
 
     html += `
       <div class="hour-card${isNowSlot ? ' now' : ''}" role="listitem">
