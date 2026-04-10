@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atmos — Weather</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="stars" id="stars"></div>
+
+  <div class="app">
+
+    <!-- Branding -->
+    <div class="brand">
+      <h1>Atm<span>os</span></h1>
+      <p>Hyperlocal weather intelligence</p>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-wrap">
+      <div class="search-row">
+        <input
+          class="search-input"
+          id="searchInput"
+          type="text"
+          placeholder="Search city, county, or region…"
+          autocomplete="off"
+        >
+        <button class="locate-btn" id="locateBtn" title="Use my location">📍</button>
+        <button class="search-btn" id="searchBtn">Go</button>
+      </div>
+      <div class="autocomplete" id="autocomplete"></div>
+    </div>
+
+    <!-- Dynamic Weather Content (injected by JS) -->
+    <div id="content">
+      <div class="state-box">
+        <div class="state-icon">🌍</div>
+        <div class="state-msg">
+          Detecting your location…
+          <br>
+          <small style="font-size:.75rem;opacity:.6">Please allow location access</small>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
